@@ -4,25 +4,41 @@
 <head>
     <title>Flash Cards</title>
     <!-- We've provided some styles for you, aren't we nice? -->
-    <link rel="stylesheet" type="text/css" href="reset.css" />
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <script src="angular.js" defer></script>
-    <script src="app.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/lib/angular.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/controllers/FlashCardController.js" defer></script>
+    <script src="js/controllers/MainController.js" defer></script>
+    <script src="js/controllers/StatsController.js" defer></script>
+    <script src="js/factories/FlashCardsFactory.js" defer></script>
+    <script src="js/factories/ScoreFactory.js" defer></script>
+    <script src="js/filters/cheat.js" defer></script>
 </head>
 
-<body ng-app="FlashCards" ng-controller="MainController">
-    <div class="flash-card" ng-controller="FlashCardController" ng-repeat="flashCard in flashCards | orderBy: 'question'">
-        <h1>{{flashCard.question | uppercase}}</h1>
-        <ul class="flash-card-answers" ng-hide="answered">
-            <li class="flash-card-answer" ng-repeat="answer in flashCard.answers" ng-click="answerQuestion(answer)">
-                {{answer.text}}
-            </li>
-        </ul>
-        <h2 class="answer-feedback" ng-show="answered" ng-class="{correct: answeredCorrectly, incorrect: !answeredCorrectly}">
-		    <span ng-show="answeredCorrectly">Yeah, you got it right!</span>
-		    <span ng-show="!answeredCorrectly">Nope, you got it wrong.</span>
-		</h2>
+<body ng-app="FlashCards">
+
+    <div ng-include="'templates/statistics.html'"></div>
+
+    <div ng-controller="MainController">
+        <button class="category-button" ng-repeat="category in categories" ng-click="getCategoryCards(category)" ng-class="{active: category === currentCategory}">{{category}}</button>
+        <button class="category-button" ng-click="getCategoryCards()">Reset</button>
+        <div class="flash-card" ng-controller="FlashCardController" ng-repeat="flashCard in flashCards | orderBy: 'question'">
+            <h3>{{flashCard.category}}</h3>
+            <h1>{{flashCard.question | uppercase}}</h1>
+            <ul class="flash-card-answers" ng-hide="answered">
+                <li class="flash-card-answer" ng-repeat="answer in flashCard.answers | cheat" ng-click="answerQuestion(answer)">
+                    {{answer.text}}
+                </li>
+            </ul>
+            <h2 class="answer-feedback" ng-show="answered" ng-class="{correct: answeredCorrectly, incorrect: !answeredCorrectly}">
+            <span ng-show="answeredCorrectly">Yeah, you got it right!</span>
+            <span ng-show="!answeredCorrectly">Nope, you got it wrong.</span>
+        </h2>
+        </div>
     </div>
+
+
 </body>
 
 </html>

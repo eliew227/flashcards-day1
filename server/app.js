@@ -16,6 +16,8 @@ var indexHtmlPath = path.join(__dirname, '../index.html');
 // http://nodejs.org/api/path.html#path_path_join_path1_path2
 // for more information about path.join
 
+var FlashCardModel = require('./models/flash-card-model');
+
 // When our server gets a request and the url matches
 // something in our public folder, serve up that file
 // e.g. angular.js, style.css
@@ -24,4 +26,20 @@ app.use(express.static(publicPath));
 // If we're hitting our home page, serve up our index.html file!
 app.get('/', function (req, res) {
     res.sendFile(indexHtmlPath);
+});
+
+app.get('/cards', function (req, res) {
+
+    var modelParams = {};
+
+    if (req.query.category) {
+    	modelParams.category = req.query.category;
+    }
+
+    FlashCardModel.find(modelParams, function (err, cards) {
+        // setTimeout(function () {
+            res.json(cards);
+        // }, Math.random() * 1000);
+    });
+
 });

@@ -58,6 +58,10 @@ html, body {
     .flash-card .flash-card-answer:last-child {
       margin-right: 0; }
 
+.mouseover {
+  border: 2px solid black;
+}
+
 .answer-feedback {
   text-align: center;
   margin-top: 50px;

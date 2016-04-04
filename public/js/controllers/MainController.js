@@ -1,10 +1,5 @@
 app.controller('MainController', function($scope, FlashCardsFactory) {
-
-    FlashCardsFactory.getFlashCards()
-    .then(function(flashCards) {
-        $scope.flashCards = flashCards;
-    });
-
+    
     $scope.categories = [
         'MongoDB',
         'Express',
@@ -13,10 +8,15 @@ app.controller('MainController', function($scope, FlashCardsFactory) {
     ];
 
     $scope.getCategoryCards = function (category) {
+        $scope.loading = true;
         $scope.currentCategory = category;
         FlashCardsFactory.getFlashCards(category)
         .then(function(flashCards) {
             $scope.flashCards = flashCards;
+            $scope.loading = false;
         });
     };
+
+    $scope.getCategoryCards();
+
 });

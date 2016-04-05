@@ -1,17 +1,32 @@
 app.factory('FlashCardsFactory', function ($http, $log) {
-    return {
-        getFlashCards: function (category) {
-            var queryParams = {};
+    var FlashCardsFactory = {};
 
-            if (category) {
-                queryParams.category = category;
-            }
+    var cachedCards = [];
+    var cachedCategory;
 
-            return $http.get('/cards', {
-                params: queryParams
-            }).then(function (response) {
-                return response.data;
-            });
+    FlashCardsFactory.getFlashCards = function (category) {
+        var queryParams = {};
+
+        if (category) {
+            queryParams.category = category;
+            cachedCategory = category;
         }
+
+        return $http.get('/cards', {
+            params: queryParams
+        }).then(function (response) {
+            angular.copy(response.data, cachedCards);
+            return cachedCards;
+        });
     };
+
+    FlashCardsFactory.createNewCard = function (newCard) {
+        return $http.post('/cards', newCard)
+        .then(function(res){
+            if (!cachedCategory || cachedCategory === newCard.category) cachedCards.push(res.data);
+            return res.data;
+        });
+    };
+
+    return FlashCardsFactory;
 });

@@ -11,6 +11,7 @@
     <script src="js/controllers/FlashCardController.js" defer></script>
     <script src="js/controllers/MainController.js" defer></script>
     <script src="js/controllers/StatsController.js" defer></script>
+    <script src="js/controllers/NewCardController.js" defer></script>
     <script src="js/factories/FlashCardsFactory.js" defer></script>
     <script src="js/factories/ScoreFactory.js" defer></script>
     <script src="js/filters/cheat.js" defer></script>
@@ -22,7 +23,58 @@
 <body ng-app="FlashCards">
     <div ng-include="'templates/statistics.html'"></div>
 
-    <div ng-controller="MainController">
+    <div ng-controller="NewCardController">
+        <loader ng-show="submitting"></loader>
+        <form name="newCardForm" ng-submit="newCardForm.$valid && createNewCard()" ng-hide="submitting" novalidate>
+            <div>
+                <label>Question</label>
+                <input type="text" ng-model="newCard.question" name="question" ng-minlength="15" required>
+                <span ng-show="newCardForm.question.$error.required && newCardForm.$submitted">Question is a required field</span>
+                <span ng-show="newCardForm.question.$error.minlength">Question is too short</span>
+            </div>
+
+            <div>
+                <label>Category</label>
+                <select ng-model="newCard.category" required name="category">
+                    <option value="MongoDB">MongoDB</option>
+                    <option value="Express">Express</option>
+                    <option value="Angular">Angular</option>
+                    <option value="Node">Node</option>
+                </select>
+                <span ng-show="newCardForm.category.$error.required && (newCardForm.category.$dirty || newCardForm.$submitted)">Category is a required field</span>
+            </div>
+
+            <div>
+                <label>Answer 1</label>
+                <input type="text" ng-model="newCard.answers[0].text" ng-maxlength="40" name="answer1" required>
+                <input type="checkbox" ng-model="newCard.answers[0].correct">
+                <span ng-show="newCardForm.answer1.$error.maxlength">Answer is too long</span>
+            </div>
+
+            <div>
+                <label>Answer 2</label>
+                <input type="text" ng-model="newCard.answers[1].text" ng-maxlength="40" name="answer2" required>
+                <input type="checkbox" ng-model="newCard.answers[1].correct">
+                <span ng-show="newCardForm.answer2.$error.maxlength">Answer is too long</span>
+            </div>
+
+            <div>
+                <label>Answer 3</label>
+                <input type="text" ng-model="newCard.answers[2].text" ng-maxlength="40" name="answer3" required>
+                <input type="checkbox" ng-model="newCard.answers[2].correct">
+                <span ng-show="newCardForm.answer3.$error.maxlength">Answer is too long</span>
+            </div>
+            
+
+            <div>
+                <button>Create</button>
+            </div>
+
+        </form>
+    </div>
+
+
+    <div ng-controller="MainController" ng-show="true">
         <button class="category-button" ng-repeat="category in categories" ng-click="getCategoryCards(category)" ng-class="{active: category === currentCategory}" border-on-hover>{{category}}</button>
         <button class="category-button" ng-click="getCategoryCards()" border-on-hover>Reset</button>
 
@@ -33,6 +85,7 @@
         <flash-card ng-repeat="flashCard in flashCards | orderBy: 'question'" ng-hide="loading" card="flashCard">
         </flash-card>
     </div>
+
 
 
 </body>

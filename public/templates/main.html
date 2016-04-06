@@ -1,0 +1,7 @@
+<div ng-show="true">
+    <button class="category-button" ng-repeat="category in categories" ng-click="getCategoryCards(category)" ng-class="{active: category === currentCategory}" border-on-hover>{{category}}</button>
+    <button class="category-button" ng-click="getCategoryCards()" border-on-hover>Reset</button>
+
+    <ui-view></ui-view>
+
+</div>

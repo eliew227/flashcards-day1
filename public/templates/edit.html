@@ -1,0 +1,49 @@
+<div>
+    <loader ng-show="submitting"></loader>
+    <form name="updateCardForm" ng-submit="updateCardForm.$valid && updateThisCard()" ng-hide="submitting" novalidate>
+        <div>
+            <label>Question</label>
+            <input type="text" ng-model="updateCard.question" name="question" ng-minlength="15" required>
+            <span ng-show="updateCardForm.question.$error.required && updateCardForm.$submitted">Question is a required field</span>
+            <span ng-show="updateCardForm.question.$error.minlength">Question is too short</span>
+        </div>
+
+        <div>
+            <label>Category</label>
+            <select ng-model="updateCard.category" required name="category">
+                <option value="MongoDB">MongoDB</option>
+                <option value="Express">Express</option>
+                <option value="Angular">Angular</option>
+                <option value="Node">Node</option>
+            </select>
+            <span ng-show="updateCardForm.category.$error.required && (updateCardForm.category.$dirty || updateCardForm.$submitted)">Category is a required field</span>
+        </div>
+
+        <div>
+            <label>Answer 1</label>
+            <input type="text" ng-model="updateCard.answers[0].text" ng-maxlength="40" name="answer1" required>
+            <input type="checkbox" ng-model="updateCard.answers[0].correct">
+            <span ng-show="updateCardForm.answer1.$error.maxlength">Answer is too long</span>
+        </div>
+
+        <div>
+            <label>Answer 2</label>
+            <input type="text" ng-model="updateCard.answers[1].text" ng-maxlength="40" name="answer2" required>
+            <input type="checkbox" ng-model="updateCard.answers[1].correct">
+            <span ng-show="updateCardForm.answer2.$error.maxlength">Answer is too long</span>
+        </div>
+
+        <div>
+            <label>Answer 3</label>
+            <input type="text" ng-model="updateCard.answers[2].text" ng-maxlength="40" name="answer3" required>
+            <input type="checkbox" ng-model="updateCard.answers[2].correct">
+            <span ng-show="updateCardForm.answer3.$error.maxlength">Answer is too long</span>
+        </div>
+        
+
+        <div>
+            <button>Update</button>
+        </div>
+
+    </form>
+</div>

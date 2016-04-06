@@ -57,6 +57,12 @@ html, body {
     line-height: 1.3em; }
     .flash-card .flash-card-answer:last-child {
       margin-right: 0; }
+  .flash-card h2 {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 12px;
+    color: #bababa; }      
 
 .mouseover {
   border: 2px solid black;

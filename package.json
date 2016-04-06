@@ -2,6 +2,7 @@
   "name": "workshop-scaffold",
   "version": "1.0.0",
   "dependencies": {
+    "angular-ui-router": "^0.2.18",
     "bluebird": "^3.3.4",
     "body-parser": "^1.15.0",
     "express": "^4.11.2",

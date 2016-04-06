@@ -1,4 +1,4 @@
-app.controller('MainController', function($scope, FlashCardsFactory) {
+app.controller('MainController', function($scope, $state) {
     
     $scope.categories = [
         'MongoDB',
@@ -8,15 +8,9 @@ app.controller('MainController', function($scope, FlashCardsFactory) {
     ];
 
     $scope.getCategoryCards = function (category) {
-        $scope.loading = true;
         $scope.currentCategory = category;
-        FlashCardsFactory.getFlashCards(category)
-        .then(function(flashCards) {
-            $scope.flashCards = flashCards;
-            $scope.loading = false;
-        });
+        $state.go('main.category', {categoryName: category});
     };
 
-    $scope.getCategoryCards();
 
 });

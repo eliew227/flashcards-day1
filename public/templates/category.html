@@ -1,0 +1,6 @@
+    <div>
+        <loader ng-show="loading"></loader>
+    </div>
+
+    <flash-card ng-repeat="flashCard in flashCards | orderBy: 'question'" ng-hide="loading" card="flashCard">
+    </flash-card>

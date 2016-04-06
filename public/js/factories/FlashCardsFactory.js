@@ -28,5 +28,26 @@ app.factory('FlashCardsFactory', function ($http, $log) {
         });
     };
 
+    FlashCardsFactory.deleteCard = function (cardId) {
+        return $http.delete('/cards/' + cardId)
+        .then(function () {
+            return;
+        });
+    };
+
+    FlashCardsFactory.getCard = function (cardId) {
+        return $http.get('/cards/' + cardId)
+        .then(function (res) {
+            return res.data;
+        });
+    };
+
+    FlashCardsFactory.updateCard = function (card) {
+        return $http.put('/cards', card)
+        .then(function(){
+            return;
+        });
+    };
+
     return FlashCardsFactory;
 });
